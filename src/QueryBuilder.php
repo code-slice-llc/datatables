@@ -36,6 +36,7 @@ class QueryBuilder
      */
     protected $hasDefaultOrder = false;
 
+    protected $queryDefaultOrder;
     /**
      * the query has default ordering
      * @var ColumnCollection
@@ -135,6 +136,11 @@ class QueryBuilder
     public function hasDefaultOrder(): bool
     {
         return $this->hasDefaultOrder;
+    }
+
+    public function setQueryDefaultOrder($column, $dir)
+    {
+        $this->queryDefaultOrder =  $column . ' ' . $dir;
     }
 
     /**
@@ -309,7 +315,8 @@ class QueryBuilder
      */
     public function defaultOrder(): string
     {
-        return $this->columns->visible()->offsetGet(0)->name.' asc';
+       // return $this->columns->visible()->offsetGet(0)->name.' asc';
+        return $this->queryDefaultOrder ?? $this->columns->visible()->offsetGet(0)->name . ' asc';
     }
 
     /**
